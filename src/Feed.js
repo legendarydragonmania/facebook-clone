@@ -9,7 +9,13 @@ function Feed() {
     <div className='feed'>
       <StoryReel />
       <MessageSender />
-      <Post />
+      <Post
+        image='https://www.perma-horti.com/wp-content/uploads/2019/02/image-2.jpg'
+        profileSrc='https://avatars.githubusercontent.com/u/6920421?'
+        username='Sven Hotta'
+        timestamp='this is a timestamp'
+        message='Okay this is seemlessly working. Boom!!!'
+      />
     </div>
   )
 }
