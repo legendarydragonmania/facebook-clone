@@ -1,21 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Feed.css'
 import StoryReel from './StoryReel'
 import MessageSender from './MessageSender'
 import Post from './Post'
+// import { useGlobalContext } from './context'
+import { db } from './firebase'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+
+const collectionReference = collection(db, 'posts')
 
 function Feed() {
+  const [posts, setPosts] = useState([])
+
+  const q = query(collectionReference, orderBy('timestamp', 'desc'))
+
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
+    })
+  }, [])
+
+  console.log(posts)
   return (
     <div className='feed'>
       <StoryReel />
       <MessageSender />
-      <Post
-        image='https://www.perma-horti.com/wp-content/uploads/2019/02/image-2.jpg'
-        profileSrc='https://avatars.githubusercontent.com/u/6920421?'
-        username='Sven Hotta'
-        timestamp='this is a timestamp'
-        message='Okay this is seemlessly working. Boom!!!'
-      />
+      {posts.map((post) => {
+        const {
+          id,
+          data: { username, message, profileSrc, image, timestamp },
+        } = post
+        return (
+          <Post
+            key={id}
+            username={username}
+            message={message}
+            profilePic={profileSrc}
+            image={image}
+            timestamp={timestamp}
+          />
+        )
+      })}
     </div>
   )
 }

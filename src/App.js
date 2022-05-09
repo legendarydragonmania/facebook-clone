@@ -5,9 +5,10 @@ import Feed from './Feed'
 import './App.css'
 import Widgets from './Widgets'
 import Login from './Login'
+import { useGlobalContext } from './context'
 
 function App() {
-  const user = null
+  const [{ user }, dispatch] = useGlobalContext()
   return (
     <div className='app'>
       {user ? (

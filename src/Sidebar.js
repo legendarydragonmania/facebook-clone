@@ -7,14 +7,13 @@ import PeopleIcon from '@mui/icons-material/People'
 import ChatIcon from '@mui/icons-material/Chat'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary'
+import { useGlobalContext } from './context'
 
 function Sidebar() {
+  const [{ user }, dispatch] = useGlobalContext()
   return (
     <div className='sidebar'>
-      <SidebarRow
-        src='https://akashmittal.com/wp-content/uploads/2022/01/react-native-final-file.jpg'
-        title='Somebody Else'
-      />
+      <SidebarRow src={user.photoUrl} title={user.displayName} />
       <SidebarRow
         Icon={LocalHospitalIcon}
         title='COVID-19 Information Center'
